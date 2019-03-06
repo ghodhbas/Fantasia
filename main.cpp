@@ -6,31 +6,49 @@ int main()
 {
     //create random seed
     srand (time(nullptr));
+    unsigned int p1wins = 0;
+    unsigned int p2wins = 0;
 
-    Player* p1 = new Player();
-    Player* p2 = new Player();
-    int turn =0;
+    for (int rep =0; rep<100000;rep++) {
+
+
+        Player* p1 = new Player();
+        Player* p2 = new Player();
+        int turn =0;
 
 
 
-    // fix extra monster summoned
-    while (p1->get_health()>0 || p2->get_health()>0) {
-        turn++;
-        if(turn % 2 ==1){
-            p1->play_turn(p2,turn);
-        }else {
-            p2->play_turn(p1,turn);
+        // fix extra monster summoned
+        while (p1->get_health()>0 && p2->get_health()>0) {
+            turn++;
+            if(turn % 2 ==1){
+                p1->play_turn(p2,turn);
+            }else {
+                p2->play_turn(p1,turn);
+            }
+            //std::cout<<"Player1 health = "<< p1->get_health()<<std::endl;
+            //std::cout<<"Player2 health = "<< p2->get_health()<<std::endl;
+            //std::cout<<std::endl;
+            if(p1->get_deck().size()==0) break;
         }
-        std::cout<<"Player1 health = "<< p1->get_health()<<std::endl;
-        std::cout<<"Player2 health = "<< p2->get_health()<<std::endl;
-        std::cout<<std::endl;
+
+
+        if(p1->get_health()<=0){
+            p2wins++;
+        }else if(p1->get_deck().size()==0){
+            p2wins++;
+        }else{
+            p1wins++;
+        }
+
+
+        std::cout<<"game "<<rep<<" over"<<std::endl;
+        delete p1;
+        delete p2;
     }
 
-
-
-
-    delete p1;
-    delete p2;
+    std::cout<<"Player 1 Score = "<<p1wins<<std::endl;
+    std::cout<<"Player 2 Score = "<<p2wins<<std::endl;
     return 0;
 }
 

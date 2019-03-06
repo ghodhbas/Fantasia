@@ -11,12 +11,6 @@ Player::Player()
     nb_cards_hand =5;
     max_nb_summoned=5;
     nb_cards_deck = 25;
-    //init board
-
-    for (int k = 0;k<max_nb_summoned;k++) {
-        board.push_back(nullptr);
-    }
-
 
     //create deck
     for(unsigned int i =0; i<nb_cards_deck;i++){
@@ -51,35 +45,36 @@ void Player::shuffle_deck(){
 
 /** @brief the player plays a turn: draw, summon, attack */
 void Player::play_turn(Player* opponent,int turn){
-    if(turn%2==1){
-        std::cout<<"---------------PLAYER 1 ---------------"<<std::endl;
-    }else {
-        std::cout<<"---------------PLAYER 2 ---------------"<<std::endl;
-    }
+    //if(turn%2==1){
+    //    std::cout<<"---------------PLAYER 1 ---------------"<<std::endl;
+    //}else {
+    //    std::cout<<"---------------PLAYER 2 ---------------"<<std::endl;
+    //}
+
     //mana cap is 10
     if(mana<10) mana++;
     curr_mana=mana;
     draw();
 
     /*test head */
-    std::cout<<"NB cards in hand: "<<get_hand().size()<<std::endl;
-    for (unsigned int i=0; i<get_hand().size();i++) {
-        Card* card = get_hand()[i];
-        std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
-    }
-    std::cout<<std::endl;
+    //std::cout<<"NB cards in hand: "<<get_hand().size()<<std::endl;
+    //for (unsigned int i=0; i<get_hand().size();i++) {
+    //    Card* card = get_hand()[i];
+    //    std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
+    //}
+    //std::cout<<std::endl;
 
 
     //keep summoning while possible
     while(summon());
-    std::cout<<"NB cards in board: "<<std::endl;
-    for (unsigned int i=0; i<get_board().size();i++) {
-
-        Card* card = get_board()[i];
-        std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
-
-    }
-    std::cout<<std::endl;
+    //std::cout<<"NB cards in board: "<<std::endl;
+    //for (unsigned int i=0; i<get_board().size();i++) {
+    //
+    //    Card* card = get_board()[i];
+    //    std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
+    //
+    //}
+    //std::cout<<std::endl;
 
     if(turn>1)attack(opponent);
 
@@ -134,7 +129,7 @@ bool Player::summon_card(Card *card, int hand_pos){
     }
 
     //board is full
-    std::cout<<"can't summon board is full"<<std::endl;
+    //std::cout<<"can't summon board is full"<<std::endl;
     return false;
 }
 
@@ -143,19 +138,19 @@ bool Player::summon_card(Card *card, int hand_pos){
 void Player::attack(Player* p2){
     //for every owned monster
     for (unsigned int monster_pos=0 ; monster_pos < board.size();monster_pos++) {
-            Card* attacker = board[monster_pos];
-            //no monster on opponent's board - attack directly
-            if(p2->get_board().size() == 0){
-                p2->set_health(p2->get_health() - board[monster_pos]->get_attack());
-            }else{
-                //if attack kills monster
-                if(attacker->get_attack() >= p2->get_board()[0]->get_health()){
-                    p2->destroy_monster();
-                }else{
-                    //damage monster
-                    p2->get_board()[0]->set_health(p2->get_board()[0]->get_health()-attacker->get_attack());
-                }
-            }
+         Card* attacker = board[monster_pos];
+         //no monster on opponent's board - attack directly
+         if(p2->get_board().size() == 0){
+             p2->set_health(p2->get_health() - board[monster_pos]->get_attack());
+         }else{
+             //if attack kills monster
+             if(attacker->get_attack() >= p2->get_board()[0]->get_health()){
+                 p2->destroy_monster();
+             }else{
+                 //damage monster
+                 p2->get_board()[0]->set_health(p2->get_board()[0]->get_health()-attacker->get_attack());
+             }
+         }
     }
 
 }
