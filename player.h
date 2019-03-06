@@ -17,10 +17,10 @@ public:
 
     //utility
     void shuffle_deck();
-    void play_turn();
+    void play_turn(Player* opponent, int turn);
     void draw();
     bool summon();
-    void attack();
+    void attack(Player* p2);
 
     //getters - setters
     int get_health(){return health;}
@@ -29,11 +29,17 @@ public:
     std::vector<Card*> get_deck(){return deck;}
     std::vector<Card*> get_hand(){return hand;}
     std::vector<Card*> get_board(){return board;}
+    void set_board(int pos,Card* v){board[pos]=v;}
+    void destroy_monster(){board.erase(board.begin());}
+
+
+    /** testing func*/
+    void set_mana(unsigned int v){mana = v; curr_mana=mana;}
+
 
 private:
     int health;
     unsigned int mana,curr_mana;
-    unsigned int turn;
 
     unsigned int nb_cards_hand;
     std::vector<Card*> hand;
@@ -42,7 +48,6 @@ private:
     std::vector<Card*> deck;
 
     unsigned int max_nb_summoned;
-    unsigned int nb_summoned;
     std::vector<Card*> board;
 
     bool summon_card(Card* card, int hand_pos);
