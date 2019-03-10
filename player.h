@@ -21,6 +21,7 @@ public:
     void draw();
     bool summon();
     void attack(Player* p2);
+    void attack_strat(Player* p2);
 
     //getters - setters
     int get_health(){return health;}

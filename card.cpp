@@ -31,24 +31,20 @@ Card::Card(unsigned int mc)
 
 /** @brief attack the opponent's card - true = monster distroyed / false = still alive
     @param card - the attacked card*/
-bool Card::attack_card(Card* card){
-    //current attacker has dmg higher or equal to attacked health
-    if(this->attack >= card->get_health()){
-        return true;
+bool Card::attack_card(Player* player){
+    if(this->get_attack() >= player->get_board()[0]->get_health()){
+        player->destroy_monster();
+    }else{
+        //damage monster
+        player->get_board()[0]->set_health(player->get_board()[0]->get_health()-this->get_attack());
     }
-
-    card->set_health(card->get_health()-this->attack);
-    return false;
+    return true;
 }
 
 /** @brief attack the opponent's health - true = player lost / false = player still alive
     @param card - the attacked card*/
 bool Card::attack_opponent(Player *player){
-    //current attacker has dmg higher or equal to attacked health
-    if(this->attack >= player->get_health()){
-        return true;
-    }
 
     player->set_health(player->get_health()-this->attack);
-    return false;
+    return true;
 }

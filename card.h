@@ -13,7 +13,7 @@ public:
     Card(unsigned int mc);
 
     //attacking
-    bool attack_card(Card* card);
+    bool attack_card(Player* player);
     bool attack_opponent(Player* player);
 
     //getters - stters

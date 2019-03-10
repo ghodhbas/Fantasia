@@ -9,7 +9,7 @@ int main()
     unsigned int p1wins = 0;
     unsigned int p2wins = 0;
 
-    for (int rep =0; rep<100000;rep++) {
+    for (int rep =0; rep<10000;rep++) {
 
 
         Player* p1 = new Player();

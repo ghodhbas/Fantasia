@@ -77,6 +77,7 @@ void Player::play_turn(Player* opponent,int turn){
     //std::cout<<std::endl;
 
     if(turn>1)attack(opponent);
+    //if(turn>1)attack_strat(opponent);
 
 }
 
@@ -138,6 +139,27 @@ bool Player::summon_card(Card *card, int hand_pos){
 void Player::attack(Player* p2){
     //for every owned monster
     for (unsigned int monster_pos=0 ; monster_pos < board.size();monster_pos++) {
+         Card* attacker = board[monster_pos];
+         //no monster on opponent's board - attack directly
+         if(p2->get_board().size() == 0){
+             attacker->attack_opponent(p2);
+         }else{
+             //if attack kills monster
+             attacker->attack_card(p2);
+         }
+    }
+
+}
+
+/** @brief attack method with basic strategy- priorritize monsters that would be killed with the attack*/
+void Player::attack_strat(Player* p2){
+    //for every owned monster
+    for (unsigned int monster_pos=0 ; monster_pos < board.size();monster_pos++) {
+
+
+
+
+
          Card* attacker = board[monster_pos];
          //no monster on opponent's board - attack directly
          if(p2->get_board().size() == 0){
