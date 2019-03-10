@@ -41,6 +41,18 @@ bool Card::attack_card(Player* player){
     return true;
 }
 
+/** @brief attack the opponent's card - true = monster distroyed / false = still alive
+    @param card - the attacked card*/
+bool Card::attack_card(Player* player, int pos){
+    if(this->get_attack() >= player->get_board()[pos]->get_health()){
+        player->destroy_monster(pos);
+    }else{
+        //damage monster
+        player->get_board()[pos]->set_health(player->get_board()[pos]->get_health()-this->get_attack());
+    }
+    return true;
+}
+
 /** @brief attack the opponent's health - true = player lost / false = player still alive
     @param card - the attacked card*/
 bool Card::attack_opponent(Player *player){

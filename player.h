@@ -32,6 +32,7 @@ public:
     std::vector<Card*> get_board(){return board;}
     void set_board(int pos,Card* v){board[pos]=v;}
     void destroy_monster(){board.erase(board.begin());}
+    void destroy_monster(int pos){board.erase(board.begin()+pos);}
 
 
     /** testing func*/
@@ -51,6 +52,7 @@ private:
     unsigned int max_nb_summoned;
     std::vector<Card*> board;
 
+    void attack_routine(Player* player, Card* attacker);
     bool summon_card(Card* card, int hand_pos);
 
 

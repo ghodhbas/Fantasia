@@ -76,8 +76,8 @@ void Player::play_turn(Player* opponent,int turn){
     //}
     //std::cout<<std::endl;
 
-    if(turn>1)attack(opponent);
-    //if(turn>1)attack_strat(opponent);
+    //if(turn>5)attack(opponent);
+    if(turn>5)attack_strat(opponent);
 
 }
 
@@ -144,7 +144,7 @@ void Player::attack(Player* p2){
          if(p2->get_board().size() == 0){
              attacker->attack_opponent(p2);
          }else{
-             //if attack kills monster
+             //attack first monster on board
              attacker->attack_card(p2);
          }
     }
@@ -155,24 +155,38 @@ void Player::attack(Player* p2){
 void Player::attack_strat(Player* p2){
     //for every owned monster
     for (unsigned int monster_pos=0 ; monster_pos < board.size();monster_pos++) {
+        attack_routine(p2,board[monster_pos]);
+    }
+}
 
 
+/** @brief find optimal monster to attack*/
+void Player::attack_routine(Player *player, Card* attacker){
+    int kill_index = -1;
+    int kill_health = 0;
+    int alive_index = -1;
+    int alive_health =  99;
 
+    //find attacked
+    for (int i = 0 ;i< player->get_board().size();i++) {
+        int attacked_health = player->get_board().at(i)->get_health();
+        //killable
+        if(attacked_health <= attacker->get_attack() &&  attacked_health > kill_health){
+            kill_index = i;
+            kill_health = attacked_health;
+        }else if (attacked_health > attacker->get_health() && attacked_health < alive_health) {
+            //not killable
+            alive_index = i;
+            alive_health = attacked_health;
+        }
+    }
 
-
-         Card* attacker = board[monster_pos];
-         //no monster on opponent's board - attack directly
-         if(p2->get_board().size() == 0){
-             p2->set_health(p2->get_health() - board[monster_pos]->get_attack());
-         }else{
-             //if attack kills monster
-             if(attacker->get_attack() >= p2->get_board()[0]->get_health()){
-                 p2->destroy_monster();
-             }else{
-                 //damage monster
-                 p2->get_board()[0]->set_health(p2->get_board()[0]->get_health()-attacker->get_attack());
-             }
-         }
+    if(kill_index>=0) {
+        attacker->attack_card(player,kill_index);
+    }else if (alive_index>=0) {
+        attacker->attack_card(player,alive_index);
+    }else{
+        attacker->attack_opponent(player);
     }
 
 }

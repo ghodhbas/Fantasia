@@ -14,6 +14,7 @@ public:
 
     //attacking
     bool attack_card(Player* player);
+    bool attack_card(Player* player, int pos);
     bool attack_opponent(Player* player);
 
     //getters - stters
