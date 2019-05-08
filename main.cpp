@@ -9,7 +9,7 @@ int main()
     unsigned int p1wins = 0;
     unsigned int p2wins = 0;
 
-    for (int rep =0; rep<100000;rep++) {
+    for (int rep =0; rep<1;rep++) {
 
 
         Player* p1 = new Player();
@@ -26,9 +26,9 @@ int main()
             }else {
                 p2->play_turn(p1,turn);
             }
-            //std::cout<<"Player1 health = "<< p1->get_health()<<std::endl;
-            //std::cout<<"Player2 health = "<< p2->get_health()<<std::endl;
-            //std::cout<<std::endl;
+            std::cout<<"Player1 health = "<< p1->get_health()<<std::endl;
+            std::cout<<"Player2 health = "<< p2->get_health()<<std::endl;
+            std::cout<<std::endl;
             if(p1->get_deck().size()==0) break;
         }
 

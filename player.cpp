@@ -45,11 +45,11 @@ void Player::shuffle_deck(){
 
 /** @brief the player plays a turn: draw, summon, attack */
 void Player::play_turn(Player* opponent,int turn){
-    //if(turn%2==1){
-    //    std::cout<<"---------------PLAYER 1 ---------------"<<std::endl;
-    //}else {
-    //    std::cout<<"---------------PLAYER 2 ---------------"<<std::endl;
-    //}
+    if(turn%2==1){
+        std::cout<<"---------------PLAYER 1 ---------------"<<std::endl;
+    }else {
+        std::cout<<"---------------PLAYER 2 ---------------"<<std::endl;
+    }
 
     //mana cap is 10
     if(mana<10) mana++;
@@ -57,26 +57,26 @@ void Player::play_turn(Player* opponent,int turn){
     draw();
 
     /*test head */
-    //std::cout<<"NB cards in hand: "<<get_hand().size()<<std::endl;
-    //for (unsigned int i=0; i<get_hand().size();i++) {
-    //    Card* card = get_hand()[i];
-    //    std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
-    //}
-    //std::cout<<std::endl;
+    std::cout<<"NB cards in hand: "<<get_hand().size()<<std::endl;
+    for (unsigned int i=0; i<get_hand().size();i++) {
+        Card* card = get_hand()[i];
+        std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
+    }
+    std::cout<<std::endl;
 
 
     //keep summoning while possible
     while(summon());
-    //std::cout<<"NB cards in board: "<<std::endl;
-    //for (unsigned int i=0; i<get_board().size();i++) {
-    //
-    //    Card* card = get_board()[i];
-    //    std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
-    //
-    //}
-    //std::cout<<std::endl;
+    std::cout<<"Cards on board: "<<std::endl;
+    for (unsigned int i=0; i<get_board().size();i++) {
 
-    //if(turn>5)attack(opponent);
+        Card* card = get_board()[i];
+        std::cout<<"Monster "<<i<<": Attack = "<<card->get_attack()<<"; health = "<<card->get_health()<<"; mana cost = "<< card->get_mana_cost()<<std::endl;
+
+    }
+    std::cout<<std::endl;
+
+    //if(turn>1)attack(opponent);
     if(turn>5)attack_strat(opponent);
 
 }
